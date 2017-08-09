@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="universitaet" nsURI="http://www.example.org/universitaet" nsPrefix="universitaet">
+  <eClassifiers xsi:type="ecore:EClass" name="Entity" abstract="true">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="ID" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="ausblenden" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="User" abstract="true" eSuperTypes="#//Entity">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Vorname" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Nachname" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Mitarbeiter" eSuperTypes="#//User">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="MitarbeiterKennung" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Arbeitsverhaeltnis" eType="#//Arbeitsverhaeltnis"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="Arbeitsverhaeltnis">
+    <eLiterals name="Professor" literal=""/>
+    <eLiterals name="AssistentProfessor" value="1"/>
+    <eLiterals name="PostDoc" value="2"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Student" eSuperTypes="#//User">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Matrikelnummer" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Semester" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Vorlesung" eSuperTypes="#//Entity">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="VorlesungKennung" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="Mitarbeiter" lowerBound="1"
+        eType="#//Mitarbeiter"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="Studenten" upperBound="-1"
+        eType="#//Student"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="Raum" lowerBound="1" eType="#//Raum"
+        derived="true" eOpposite="#//Raum/Vorlesungen"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Gebaeude" eSuperTypes="#//Entity">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="GebaeudeKennung" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="Raeume" upperBound="-1"
+        eType="#//Raum"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Raum" eSuperTypes="#//Entity">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="RaumKennung" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="Vorlesungen" upperBound="-1"
+        eType="#//Vorlesung" containment="true" eOpposite="#//Vorlesung/Raum"/>
+  </eClassifiers>
+</ecore:EPackage>
